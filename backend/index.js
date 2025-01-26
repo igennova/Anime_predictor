@@ -1,6 +1,5 @@
 import express from "express";
 import axios from "axios";
-import puppeteer from "puppeteer";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -50,39 +49,17 @@ async function fetchAnimeCharacter(searchTerm) {
     return null;
 }
 
-// Fetch LeetCode data using Puppeteer
+// Fetch LeetCode data for the username
 async function fetchLeetCodeData(username) {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-
     try {
-        await page.goto(`https://leetcode.com/${username}/`, { waitUntil: "networkidle2" });
-
-        const leetcodeData = await page.evaluate(() => {
-            const totalSolved = document.querySelector(
-                ".total-solved-count"
-            )?.innerText || "0";
-            const hardSolved = document.querySelector(
-                ".hard-solved-count"
-            )?.innerText || "0";
-            const ranking = document.querySelector(
-                ".ranking-number"
-            )?.innerText || "N/A";
-
-            return {
-                totalSolved: parseInt(totalSolved.replace(/\D/g, ""), 10) || 0,
-                hardSolved: parseInt(hardSolved.replace(/\D/g, ""), 10) || 0,
-                ranking: ranking.trim() || "N/A",
-            };
-        });
-
-        await browser.close();
-        return leetcodeData;
+        const response = await axios.get(`https://leetcode-stats-api.herokuapp.com/${username}`);
+        if (response.status === 200) {
+            return response.data;
+        }
     } catch (error) {
-        console.error("Puppeteer Error:", error);
-        await browser.close();
-        return null;
+        console.error("LeetCode API Error:", error.response ? error.response.data : error.message);
     }
+    return null;
 }
 
 // Recommend anime character using Gemini
@@ -161,10 +138,11 @@ app.get("/api/assign-character", async (req, res) => {
 
         console.log("Recommendation:", recommendation);
         console.log("Character Name:", cleanedCharacterName);
-        if (cleanedCharacterName == "Levi Ackerman") {
-            cleanedCharacterName = "Levi";
-        } else if (cleanedCharacterName == "Kiyotaka Ayanokoji") {
-            cleanedCharacterName = "Ayanokoji";
+        if (cleanedCharacterName=="Levi Ackerman"){
+            cleanedCharacterName="Levi"
+        }
+        else if (cleanedCharacterName=="Kiyotaka Ayanokoji"){
+            cleanedCharacterName="Ayanokoji"
         }
 
         // Fetch character data from AniList
@@ -203,17 +181,7 @@ app.get("/api/assign-character", async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
-app.get("/proxy-image", async (req, res) => {
-    const imageUrl = req.query.url;
-    try {
-      const response = await fetch(imageUrl);
-      const imageBuffer = await response.buffer();
-      res.set("Content-Type", response.headers.get("content-type"));
-      res.send(imageBuffer);
-    } catch (err) {
-      res.status(500).send("Failed to fetch image");
-    }
-  });
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
