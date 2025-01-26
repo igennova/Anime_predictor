@@ -27,7 +27,7 @@ export default function Page() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/assign-character?username=${username}`
+        `https://anime-predictor.onrender.com/api/assign-character?username=${username}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
