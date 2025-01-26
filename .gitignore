@@ -33,4 +33,4 @@ dist-ssr
 
 # Other
 */node_modules
-/backend/env
+/.env
