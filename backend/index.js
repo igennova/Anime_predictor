@@ -65,21 +65,22 @@ async function fetchLeetCodeData(username) {
 // Recommend anime character using Gemini
 async function recommendAnimeCharacter(totalSolved, hardSolved, rating) {
     const prompt = `
-    Based on the following LeetCode profile:
-
+    Based on the user's LeetCode profile:
+    
     - Total problems solved: ${totalSolved}
     - Hard problems solved: ${hardSolved}
     - Ranking on LeetCode: ${rating}
-
-    Recommend an anime character male or female that best represents this user. 
-  
-    You can be creative and use the LeetCode stats to match the character's traits or abilities.
-    Roast them also in one liner and after one characetr use different anime character don't repeat character multiplt times
-    Return the response in the following format:
-    the description should be only 50-60 words and  also roast them in description by comparing it from character
+    
+    Assign a unique anime character (male or female) that matches this user's coding stats.  
+    Be creative and use their LeetCode stats to draw fun comparisons to the character's traits or abilities.  
+    Roast them with a witty one-liner while comparing them to the character.  
+    Ensure each response is unique, avoiding repetition of the same character.
+    
+    Format the response as follows:
     Character Name: <character_name>
-    Description: <brief_description>
+    Description: <50-60 word description comparing the user's profile with the character, including a fun roast>.
     `;
+    
 
     try {
         // Generate content using Gemini
