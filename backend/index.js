@@ -74,7 +74,7 @@ async function recommendAnimeCharacter(totalSolved, hardSolved, rating) {
     Recommend an anime character male or female that best represents this user. 
   
     You can be creative and use the LeetCode stats to match the character's traits or abilities.
-    Roast them also in one liner and use different anime character most of the time
+    Roast them also in one liner and after one characetr use different anime character don't repeat character multiplt times
     Return the response in the following format:
     the description should be only 50-60 words and u can also roast them if their profile is not strong
     Character Name: <character_name>
