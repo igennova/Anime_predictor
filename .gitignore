@@ -7,6 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Environment variables
+.env                # Ignore all .env files
+.env.local          # Ignore local environment files
+.env.development    # Ignore development environment files
+.env.production     # Ignore production environment files
+.env.test           # Ignore test environment files
+
+# Node modules and build directories
 node_modules
 dist
 dist-ssr
@@ -22,5 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Other
 */node_modules
-*/.env
+/backend/env
