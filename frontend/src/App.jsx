@@ -60,7 +60,7 @@ export default function Page() {
         document.body.removeChild(link);
 
         // Open Twitter with prefilled text
-        const tweetText = `Check out my anime character: ${character.name}!\n\n#Anime #LeetCode`;
+        const tweetText = `Check out my anime character: ${character.name}!\nhttps://anime-predictor-ulob.vercel.app/ \n#Anime #LeetCode`;
         const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
           tweetText
         )}`;
